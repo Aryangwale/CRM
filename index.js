@@ -628,7 +628,7 @@ function newtask(x) {
     st.id = "st";
     st.name = "myUs";
     st.setAttribute("class", 'form-control')
-    mydata.projects[0].myTeam.map(x => {
+    mydata.projects[x].myTeam.map(x => {
         let opt = document.createElement("option");
         opt.value = x;
         opt.textContent = x;
