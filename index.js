@@ -2,6 +2,7 @@
 
 function home() {
     let mainpage = document.getElementById("main");
+    if(!document.getElementById("nav-main")){
     mainpage.setAttribute("style", "padding-right: 0; padding-left: 0;");
     let navH = document.getElementById("navHead");
     let navDiv = document.createElement("div");
@@ -64,7 +65,14 @@ function home() {
         rightDiv.appendChild(but1)
     }
     navDiv.appendChild(rightDiv)
-    navH.appendChild(navDiv)
+    navH.appendChild(navDiv)}
+    else{
+        document.getElementById("nav-main").remove();
+        if(document.getElementById("div1")){
+            document.getElementById("div1").remove()
+        }
+        home()
+    }
 }
 
 
@@ -1108,10 +1116,10 @@ function login() {
         let bb = document.createElement("button");
         bd.setAttribute("style", " padding: auto; padding-left: 315px; padding-top: 20px;");
         bb.textContent = "login"
-        bb.type = "submit"
+        bb.type = "button"
 
         bb.setAttribute("class", "btn btn-success m-auto");
-        formt.onsubmit = () => {
+        bb.onclick = () => {
             if (authUser(mDiv)) {
                 home();
             }
