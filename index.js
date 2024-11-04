@@ -2,73 +2,74 @@
 
 function home() {
     let mainpage = document.getElementById("main");
-    if(!document.getElementById("nav-main")){
-    mainpage.setAttribute("style", "padding-right: 0; padding-left: 0;");
-    let navH = document.getElementById("navHead");
-    let navDiv = document.createElement("div");
-    navDiv.id = "nav-main";
-    navDiv.setAttribute("class", "container-fluid d-flex align-items-center justify-content-around fixed-top");
-    navDiv.setAttribute("style", "background-color: rgba(0, 0, 0, 0.068); height: 45px;")
+    if (!document.getElementById("nav-main")) {
+        mainpage.setAttribute("style", "padding-right: 0; padding-left: 0;");
+        let navH = document.getElementById("navHead");
+        let navDiv = document.createElement("div");
+        navDiv.id = "nav-main";
+        navDiv.setAttribute("class", "container-fluid d-flex align-items-center justify-content-around fixed-top");
+        navDiv.setAttribute("style", "background-color: rgba(0, 0, 0, 0.068); height: 45px;")
 
-    let leftDiv = document.createElement("div");
-    leftDiv.id = "main-left";
-    leftDiv.innerHTML = "<strong>CRM</strong>"
-    navDiv.appendChild(leftDiv)
+        let leftDiv = document.createElement("div");
+        leftDiv.id = "main-left";
+        leftDiv.innerHTML = "<strong>CRM</strong>"
+        navDiv.appendChild(leftDiv)
 
-    let midDiv = document.createElement("div");
-    midDiv.id = "main-mid";
-    midDiv.setAttribute("class", "d-flex align-items-center");
-
-
-
-    midDivLeft = document.createElement("div");
-    midDivLeft.id = "midDivLeft";
-    midDivLeft.innerHTML = "MY Project"
-    midDivLeft.setAttribute("style", "cursor: pointer;");
-    midDivLeft.setAttribute("class", "p-3");
-    midDivLeft.setAttribute("onclick", "addTask()")
-    midDiv.appendChild(midDivLeft);
-
-    midDivRight = document.createElement("div");
-    midDivRight.id = "midDivRight";
-    midDivRight.innerHTML = "MY Tasks"
-    midDivRight.setAttribute("style", "cursor: pointer;");
-    midDivRight.setAttribute("class", "p-3");
-    midDivRight.setAttribute("onclick", "detail()")
-    midDiv.appendChild(midDivRight);
+        let midDiv = document.createElement("div");
+        midDiv.id = "main-mid";
+        midDiv.setAttribute("class", "d-flex align-items-center");
 
 
-    navDiv.appendChild(midDiv)
 
-    let rightDiv = document.createElement("div");
-    if (!sessionStorage.length > 0) {
-        let rightdiv1 = document.createElement("div");
-        let but1 = document.createElement("button");
-        but1.textContent = "login";
-        but1.setAttribute("class", "btn btn-outline-dark btn-sm m-1")
-        but1.setAttribute("onclick", "login()");
-        let but2 = document.createElement("button");
-        but2.textContent = "signup";
-        but2.setAttribute("class", "btn btn-outline-dark btn-sm m-1")
-        but2.setAttribute("onclick", "signup()");
-        rightDiv.id = "main-right";
-        rightdiv1.appendChild(but1)
-        rightdiv1.appendChild(but2)
-        rightDiv.appendChild(rightdiv1)
+        midDivLeft = document.createElement("div");
+        midDivLeft.id = "midDivLeft";
+        midDivLeft.innerHTML = "MY Project"
+        midDivLeft.setAttribute("style", "cursor: pointer;");
+        midDivLeft.setAttribute("class", "p-3");
+        midDivLeft.setAttribute("onclick", "addTask()")
+        midDiv.appendChild(midDivLeft);
+
+        midDivRight = document.createElement("div");
+        midDivRight.id = "midDivRight";
+        midDivRight.innerHTML = "MY Tasks"
+        midDivRight.setAttribute("style", "cursor: pointer;");
+        midDivRight.setAttribute("class", "p-3");
+        midDivRight.setAttribute("onclick", "detail()")
+        midDiv.appendChild(midDivRight);
+
+
+        navDiv.appendChild(midDiv)
+
+        let rightDiv = document.createElement("div");
+        if (!sessionStorage.length > 0) {
+            let rightdiv1 = document.createElement("div");
+            let but1 = document.createElement("button");
+            but1.textContent = "login";
+            but1.setAttribute("class", "btn btn-outline-dark btn-sm m-1")
+            but1.setAttribute("onclick", "login()");
+            let but2 = document.createElement("button");
+            but2.textContent = "signup";
+            but2.setAttribute("class", "btn btn-outline-dark btn-sm m-1")
+            but2.setAttribute("onclick", "signup()");
+            rightDiv.id = "main-right";
+            rightdiv1.appendChild(but1)
+            rightdiv1.appendChild(but2)
+            rightDiv.appendChild(rightdiv1)
+        }
+        else {
+            let but1 = document.createElement("button");
+            but1.textContent = "logout";
+            but1.id = "logOut"
+            but1.setAttribute("class", "btn btn-outline-dark btn-sm m-1")
+            but1.setAttribute("onclick", "logout()");
+            rightDiv.appendChild(but1)
+        }
+        navDiv.appendChild(rightDiv)
+        navH.appendChild(navDiv)
     }
     else {
-        let but1 = document.createElement("button");
-        but1.textContent = "logout";
-        but1.id = "logOut"
-        but1.setAttribute("class", "btn btn-outline-dark btn-sm m-1")
-        but1.setAttribute("onclick", "logout()");
-        rightDiv.appendChild(but1)
-    }
-    navDiv.appendChild(rightDiv)
-    navH.appendChild(navDiv)}
-    else{
         document.getElementById("nav-main").remove();
-        if(document.getElementById("div1")){
+        if (document.getElementById("div1")) {
             document.getElementById("div1").remove()
         }
         home()
@@ -385,8 +386,9 @@ function showTask(con, xy) {
 
 function taskIn(x) {
 
-    let rr = document.getElementById("mypro2").remove()
-    let r = document.getElementById("div1").remove();
+    if (document.getElementById("mypro2")) 
+        { document.getElementById("mypro2").remove() }
+    document.getElementById("div1").remove();
     let main = document.getElementById("mainBody")
     let tMain = document.createElement("div");
     tMain.id = "div1"
@@ -649,14 +651,19 @@ function newtask(x) {
     let bd = document.createElement("div");
     let bb = document.createElement("button");
     bd.setAttribute("style", " padding: auto; padding-left: 315px; padding-top: 20px;");
-    bb.textContent = "submit"
+    bb.textContent = "button"
     bb.type = "create"
     bd.appendChild(bb)
     myform.appendChild(bd)
 
     bb.setAttribute("class", "btn btn-success m-auto");
-    myform.onsubmit = () => {
-        return taskValidate(x);
+    bb.onclick = () => {
+        if (taskValidate(x)) {
+            taskIn(x)
+        }
+        else {
+            return false
+        }
     }
 
 
@@ -742,12 +749,18 @@ function newPro() {
     div1.appendChild(udiv);
 
     let btn = document.createElement("button");
-    btn.type = "sumbit";
+    btn.type = "button";
     btn.textContent = "create"
     btn.setAttribute("class", "btn btn-outline-success btn-lg")
     btn.setAttribute("style", "padding: 0 5px")
-    formt.onsubmit = () => {
-        return proValidate();
+    btn.onclick = () => {
+        if (proValidate()) {
+            console.log("done")
+            addTask()
+        }
+        else {
+            return false
+        }
     }
     div1.appendChild(btn);
     formt.appendChild(div1)
@@ -921,7 +934,7 @@ function signup() {
         bb.type = "submit"
 
         bb.setAttribute("class", "btn btn-success m-auto");
-        formt.onsubmit = () => {
+        bb.onclick = () => {
             if (validate(mDiv)) {
                 login()
             }
