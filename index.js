@@ -1,3 +1,5 @@
+
+
 function home() {
     let mainpage = document.getElementById("main");
     if (!document.getElementById("nav-main")) {
@@ -84,8 +86,11 @@ function detail() {
             mainDiv.id = "div1";
             let div2 = document.createElement("div");
             div2.id = "div2"
+            let p = 1
             getData().Task.map(x => {
-                proDetail(x, div2);
+                
+                proDetail(x, div2 ,p);
+                p++;
             })
             mainDiv.appendChild(div2)
             mainBody.appendChild(mainDiv)
@@ -103,7 +108,7 @@ function detail() {
 }
 
 
-function proDetail(x, y) {
+function proDetail(x, y,p) {
     if (document.getElementById("mypro2")) {
         document.getElementById("mypro2").remove()
     }
@@ -115,14 +120,18 @@ function proDetail(x, y) {
     let r = document.createElement("div");
     r.setAttribute("class", "row");
     r.setAttribute("style", "margin:0;");
+    let c = document.createElement("div");
+    c.setAttribute("class","col-md-2");
+    c.textContent = p;
     let c1 = document.createElement("div");
-    c1.setAttribute("class", 'col-md-6')
+    c1.setAttribute("class", 'col-md-4')
     c1.setAttribute("style", 'padding: 0;')
     c1.innerHTML = `<strong>${x.proName}</strong>`
     let c2 = document.createElement("div");
     c2.setAttribute("style", 'padding: 0;')
     c2.innerHTML = `<strong>${x.proDesc}</strong>`
     c2.setAttribute("class", 'col-md-6')
+    r.appendChild(c)
     r.appendChild(c1)
     r.appendChild(c2)
     TDD.appendChild(r)
@@ -689,14 +698,16 @@ function filterPro() {
     let x = getData();
     let y = x["projects"];
     let arr = [];
+    console.log(y)
     y.map(z => {
-        let a = z.proname;
+        let a = z.proName;
+        console.log(a);
         let b = a.toUpperCase()
         if (b.includes(n)) {
             arr.push(z);
         }
     })
-    let main = document.getElementById("mypro1");
+    let main = document.getElementById("mainBody");
     let div = document.getElementById("mypro2");
     main.removeChild(div);
     let div2 = document.createElement("div");
