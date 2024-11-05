@@ -1058,7 +1058,7 @@ function passCheck() {
         es.textContent = "*field required"
         return false
     }
-    else if (pass.length > 12 || pass.length < 4) {
+    else if (pass.length > 18 || pass.length < 4) {
         if (pass.length > 12) {
             es.textContent = "password is too long!"
             return false
@@ -1112,7 +1112,7 @@ function unameCheck() {
         es.textContent = "*field required"
         return false
     }
-    else if (username.length > 10 || username.length < 4) {
+    else if (username.length > 20 || username.length < 4) {
         if (username.length > 10) {
             es.textContent = "lenght too large"
         }
