@@ -460,6 +460,7 @@ function taskInTask(x, y) {
     let mydata = getData();
     let i = 1
     mydata.projects[x].tasks.map(z => {
+        console.log(mydata.projects[x])
         let tr = document.createElement("tr");
 
         let th1 = document.createElement("th");
@@ -650,7 +651,8 @@ function newtask(x) {
 
     let bd = document.createElement("div");
     let bb = document.createElement("button");
-    bd.setAttribute("style", " padding: auto; padding-left: 315px; padding-top: 20px;");
+    bd.setAttribute("class","form-group w-50 m-auto");
+    bd.setAttribute("style", " padding: auto; padding-top: 20px;");
     bb.textContent = "button"
     bb.type = "create"
     bd.appendChild(bb)
@@ -929,7 +931,8 @@ function signup() {
         });
         let bd = document.createElement("div");
         let bb = document.createElement("button");
-        bd.setAttribute("style", " padding: auto; padding-left: 315px; padding-top: 20px;");
+        bd.setAttribute("class","form-group w-50 m-auto");
+        bd.setAttribute("style", " padding: auto; padding-top: 20px;");
         bb.textContent = "submit"
         bb.type = "submit"
 
@@ -1127,7 +1130,8 @@ function login() {
         });
         let bd = document.createElement("div");
         let bb = document.createElement("button");
-        bd.setAttribute("style", " padding: auto; padding-left: 315px; padding-top: 20px;");
+        bd.setAttribute("class","form-group w-50 m-auto");
+        bd.setAttribute("style", " padding: auto; padding-top: 20px;");
         bb.textContent = "login"
         bb.type = "button"
 
