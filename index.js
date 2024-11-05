@@ -1,5 +1,3 @@
-
-
 function home() {
     let mainpage = document.getElementById("main");
     if (!document.getElementById("nav-main")) {
@@ -77,24 +75,30 @@ function home() {
 }
 
 
-function detail() {
-    if (!document.getElementById("div1")) {
-        let mainBody = document.getElementById('mainBody');
-        let mainDiv = document.createElement("div");
-        mainDiv.id = "div1";
-        let div2 = document.createElement("div");
-        div2.id = "div2"
-        getData().Task.map(x => {
-            proDetail(x, div2);
-        })
-        mainDiv.appendChild(div2)
-        mainBody.appendChild(mainDiv)
 
+function detail() {
+    if (sessionStorage.length > 0) {
+        if (!document.getElementById("div1")) {
+            let mainBody = document.getElementById('mainBody');
+            let mainDiv = document.createElement("div");
+            mainDiv.id = "div1";
+            let div2 = document.createElement("div");
+            div2.id = "div2"
+            getData().Task.map(x => {
+                proDetail(x, div2);
+            })
+            mainDiv.appendChild(div2)
+            mainBody.appendChild(mainDiv)
+
+        }
+        else {
+            let f = document.getElementById("div1")
+            f.remove()
+            detail()
+        }
     }
     else {
-        let f = document.getElementById("div1")
-        f.remove()
-        detail()
+        login("detail");
     }
 }
 
@@ -284,64 +288,68 @@ function getData() {
 
 
 function addTask() {
+    if (sessionStorage.length > 0) {
+        if (!document.getElementById("div1")) {
+            let MB = document.getElementById("mainBody");
 
-    if (!document.getElementById("div1")) {
-        let MB = document.getElementById("mainBody");
-
-        let div1 = document.createElement("div");
-        div1.setAttribute("style", " height: 45px;");
-        div1.id = "div1";
-        div1.setAttribute("class", "row");
-        div1.setAttribute("class", "container-fluid d-flex align-items-center  justify-content-around");
-
-
-        let div11 = document.createElement("div");
-        div11.id = "m1"
-        div11.setAttribute("class", "col-md-4 offset-md-1");
-        div11.innerHTML = "<strong>Create Project<button id='newpro' onclick='newPro()' class='btn btn-success btn-sm' style='border-radius: 20px; margin:4px;'>+</button></strong>";
+            let div1 = document.createElement("div");
+            div1.setAttribute("style", " height: 45px;");
+            div1.id = "div1";
+            div1.setAttribute("class", "row");
+            div1.setAttribute("class", "container-fluid d-flex align-items-center  justify-content-around");
 
 
-        let div12 = document.createElement("div");
-        div12.id = "m2"
-        div12.setAttribute("class", "col-md-6");
-        let inpTag = document.createElement("input");
-        inpTag.id = "proSrc";
-        inpTag.type = "text";
-        inpTag.placeholder = "search"
-        inpTag.setAttribute("class", "form-control")
-        inpTag.setAttribute("onkeyup", "filterPro()");
-        div12.appendChild(inpTag);
+            let div11 = document.createElement("div");
+            div11.id = "m1"
+            div11.setAttribute("class", "col-md-4 offset-md-1");
+            div11.innerHTML = "<strong>Create Project<button id='newpro' onclick='newPro()' class='btn btn-success btn-sm' style='border-radius: 20px; margin:4px;'>+</button></strong>";
 
 
-        if (document.getElementById("mypro2")) {
-            let rem = document.getElementById("mypro2")
-            rem.remove();
-        }
-        let div2 = document.createElement("div");
-        div2.id = "mypro2"
-        div2.setAttribute("class", "container mt-4");
+            let div12 = document.createElement("div");
+            div12.id = "m2"
+            div12.setAttribute("class", "col-md-6");
+            let inpTag = document.createElement("input");
+            inpTag.id = "proSrc";
+            inpTag.type = "text";
+            inpTag.placeholder = "search"
+            inpTag.setAttribute("class", "form-control")
+            inpTag.setAttribute("onkeyup", "filterPro()");
+            div12.appendChild(inpTag);
 
 
-        if (getData()) {
-            let ult = document.createElement("ul");
-            ult.setAttribute("class", "list-group")
-            ult.id = "mylist"
-            showTask(ult, getData())
-            div2.appendChild(ult);
+            if (document.getElementById("mypro2")) {
+                let rem = document.getElementById("mypro2")
+                rem.remove();
+            }
+            let div2 = document.createElement("div");
+            div2.id = "mypro2"
+            div2.setAttribute("class", "container mt-4");
+
+
+            if (getData()) {
+                let ult = document.createElement("ul");
+                ult.setAttribute("class", "list-group")
+                ult.id = "mylist"
+                showTask(ult, getData())
+                div2.appendChild(ult);
+            }
+            else {
+                div2.innerHTML = "<h4>login required!<h4>"
+            }
+
+            div1.appendChild(div11);
+            div1.appendChild(div12);
+            MB.appendChild(div1);
+            MB.appendChild(div2);
         }
         else {
-            div2.innerHTML = "<h4>login required!<h4>"
+            let f = document.getElementById("div1")
+            f.remove();
+            addTask();
         }
-
-        div1.appendChild(div11);
-        div1.appendChild(div12);
-        MB.appendChild(div1);
-        MB.appendChild(div2);
     }
     else {
-        let f = document.getElementById("div1")
-        f.remove();
-        addTask();
+        login("addTask");
     }
 }
 
@@ -386,8 +394,7 @@ function showTask(con, xy) {
 
 function taskIn(x) {
 
-    if (document.getElementById("mypro2")) 
-        { document.getElementById("mypro2").remove() }
+    if (document.getElementById("mypro2")) { document.getElementById("mypro2").remove() }
     document.getElementById("div1").remove();
     let main = document.getElementById("mainBody")
     let tMain = document.createElement("div");
@@ -651,7 +658,7 @@ function newtask(x) {
 
     let bd = document.createElement("div");
     let bb = document.createElement("button");
-    bd.setAttribute("class","form-group w-50 m-auto");
+    bd.setAttribute("class", "form-group w-50 m-auto");
     bd.setAttribute("style", " padding: auto; padding-top: 20px;");
     bb.textContent = "button"
     bb.type = "create"
@@ -931,7 +938,7 @@ function signup() {
         });
         let bd = document.createElement("div");
         let bb = document.createElement("button");
-        bd.setAttribute("class","form-group w-50 m-auto");
+        bd.setAttribute("class", "form-group w-50 m-auto");
         bd.setAttribute("style", " padding: auto; padding-top: 20px;");
         bb.textContent = "submit"
         bb.type = "submit"
@@ -1078,7 +1085,8 @@ function unameCheck() {
     }
 }
 
-function login() {
+function login(oo) {
+
     if (!document.getElementById("div1")) {
         if (document.getElementById("mypro2")) {
             let tt = document.getElementById("mypro2");
@@ -1130,7 +1138,7 @@ function login() {
         });
         let bd = document.createElement("div");
         let bb = document.createElement("button");
-        bd.setAttribute("class","form-group w-50 m-auto");
+        bd.setAttribute("class", "form-group w-50 m-auto");
         bd.setAttribute("style", " padding: auto; padding-top: 20px;");
         bb.textContent = "login"
         bb.type = "button"
@@ -1138,7 +1146,19 @@ function login() {
         bb.setAttribute("class", "btn btn-success m-auto");
         bb.onclick = () => {
             if (authUser(mDiv)) {
-                home();
+                if(oo == "detail"){
+                    home()
+                    detail();
+                }
+                else if(oo == "addTask"){
+                    home()
+                    addTask()
+                }
+                else{
+                    home()
+                }
+                
+
             }
             else {
                 return false
@@ -1153,7 +1173,7 @@ function login() {
     else {
         let f = document.getElementById("div1")
         f.remove();
-        login();
+        login(oo);
     }
 }
 
