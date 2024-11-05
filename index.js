@@ -1223,6 +1223,9 @@ function login(oo) {
 
 
 function authUser(ver) {
+    if(document.getElementById("cre")){
+        document.getElementById("cre").remove();
+    }
     let x = document.getElementById("username").value;
     let y = document.getElementById("pass").value;
     for (let i = 1; i <= localStorage.length; i++) {
@@ -1233,6 +1236,7 @@ function authUser(ver) {
         }
     }
     let sDiv = document.createElement("div");
+    sDiv.id = "cre"
     sDiv.setAttribute("class", "alert alert-danger")
     sDiv.innerHTML = "<center><strong>Invalid Credentials!!!</strong></center>"
     ver.appendChild(sDiv);
