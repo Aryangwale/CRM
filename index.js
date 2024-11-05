@@ -81,6 +81,10 @@ function home() {
 function detail() {
     if (sessionStorage.length > 0) {
         if (!document.getElementById("div1")) {
+            highlight("detail")
+            if(document.getElementById("mypro2")){
+                document.getElementById("mypro2").remove()
+            }
             let mainBody = document.getElementById('mainBody');
             let mainDiv = document.createElement("div");
             mainDiv.id = "div1";
@@ -103,10 +107,35 @@ function detail() {
         }
     }
     else {
+        highlight("detail")
         login("detail");
     }
 }
 
+function highlight(h){
+    if(h == "detail"){
+        let y = document.getElementById("midDivLeft")
+        y.setAttribute("style","color: black; cursor: pointer;") 
+
+        let x = document.getElementById("midDivRight")
+        x.setAttribute("style","color: green; cursor: pointer;") 
+    }
+    else if(h == "addTask"){
+        let y = document.getElementById("midDivLeft")
+        y.setAttribute("style","color: green; cursor: pointer;") 
+
+        let x = document.getElementById("midDivRight")
+       x.setAttribute("style","color: black; cursor: pointer;") 
+    }
+    else{
+        let y = document.getElementById("midDivLeft")
+        y.setAttribute("style","color: black; cursor: pointer;") 
+
+        let x = document.getElementById("midDivRight")
+       x.setAttribute("style","color: black; cursor: pointer;") 
+    }
+
+}
 
 function proDetail(x, y,p) {
     if (document.getElementById("mypro2")) {
@@ -114,8 +143,8 @@ function proDetail(x, y,p) {
     }
 
     let TDD = document.createElement("div");
-    TDD.setAttribute("class", "container-fluid border")
-    TDD.setAttribute("style", "padding: 5px 0; cursor: pointer;")
+    TDD.setAttribute("class", "container border")
+    TDD.setAttribute("style", "padding: 8px 0; cursor: pointer; margin: 10px auto")
     TDD.setAttribute("onclick", `taskDetail(${JSON.stringify(x)})`)
     let r = document.createElement("div");
     r.setAttribute("class", "row");
@@ -300,7 +329,7 @@ function addTask() {
     if (sessionStorage.length > 0) {
         if (!document.getElementById("div1")) {
             let MB = document.getElementById("mainBody");
-
+            highlight("addTask")
             let div1 = document.createElement("div");
             div1.setAttribute("style", " height: 45px;");
             div1.id = "div1";
@@ -358,6 +387,7 @@ function addTask() {
         }
     }
     else {
+        highlight("addTask")
         login("addTask");
     }
 }
@@ -903,6 +933,7 @@ function signup() {
             let tt = document.getElementById("mypro2");
             tt.remove()
         }
+        highlight()
         let main = document.getElementById("mainBody");
         let maindiv = document.createElement("div");
         maindiv.id = "div1"
@@ -1103,6 +1134,7 @@ function login(oo) {
             let tt = document.getElementById("mypro2");
             tt.remove()
         }
+        highlight()
         let main = document.getElementById("mainBody");
         let maindiv = document.createElement("div");
         maindiv.id = "div1"
@@ -1121,8 +1153,8 @@ function login(oo) {
 
         let y = [
             // { 'labelName': " Enter your name", "inputType": 'text', 'for': 'uName', "ph": "name", "sid": 'nErr', "ve": 'nameCheck()' },
-            { 'labelName': "Enter username", "inputType": 'text', 'for': 'username', "ph": "username", "sid": 'unErr', "ve": 'unameCheck()' },
-            { 'labelName': "password", "inputType": 'password', 'for': 'pass', "ph": "password", "sid": 'pErr', "ve": 'passCheck()' }
+            { 'labelName': "Enter username", "inputType": 'text', 'for': 'username', "ph": "username", "sid": 'unErr', "ve": '' },
+            { 'labelName': "password", "inputType": 'password', 'for': 'pass', "ph": "password", "sid": 'pErr', "ve": '' }
         ]
 
 
