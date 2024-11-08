@@ -780,7 +780,7 @@ function taskValidate(n) {
             "status": false
         }
         a.projects[n].tasks.push(c);
-        
+        proUp(a);
         for (let i = 1; i <= localStorage.length; i++) {
             let j = JSON.parse(localStorage.getItem(i));
             let c2 = {
@@ -800,7 +800,7 @@ function taskValidate(n) {
                 localStorage.setItem(i, hn)
             }
         }
-        proUp(a);
+        
         return true;
     }
     else {
