@@ -73,7 +73,7 @@ function home() {
 
         let leftDiv = document.createElement("div");
         leftDiv.id = "main-left";
-        leftDiv.innerHTML = "<strong style='cursor: pointer;'  onclick='home()'>CRM</strong>"
+        leftDiv.innerHTML = "<strong style='cursor: pointer;'  onclick='home()'>InterAct</strong>"
         navDiv.appendChild(leftDiv)
 
         let midDiv = document.createElement("div");
