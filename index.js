@@ -723,7 +723,6 @@ function taskInTask(x, y) {
     let mydata = getData();
     let i = 1
     mydata.projects[x].tasks.map(z => {
-        console.log(mydata.projects[x])
         let tr = document.createElement("tr");
 
         let th1 = document.createElement("th");
@@ -781,8 +780,7 @@ function taskValidate(n) {
             "status": false
         }
         a.projects[n].tasks.push(c);
-        proUp(a);
-
+        
         for (let i = 1; i <= localStorage.length; i++) {
             let j = JSON.parse(localStorage.getItem(i));
             let c2 = {
@@ -794,6 +792,7 @@ function taskValidate(n) {
             if (j.Username == z) {
                 j.Task.map(x => {
                     if (a.projects[n].proName == x.proName) {
+                        console.log(z);
                         x.tasks.push(c2);
                     }
                 })
@@ -801,7 +800,7 @@ function taskValidate(n) {
                 localStorage.setItem(i, hn)
             }
         }
-
+        proUp(a);
         return true;
     }
     else {
@@ -919,7 +918,7 @@ function newtask(x) {
     let bb = document.createElement("button");
     bd.setAttribute("class", "form-group w-50 m-auto");
     bd.setAttribute("style", " padding: auto; padding-top: 20px;");
-    bb.textContent = "button"
+    bb.textContent = "create"
     bb.type = "create"
     bd.appendChild(bb)
     myform.appendChild(bd)
@@ -948,10 +947,8 @@ function filterPro() {
     let x = getData();
     let y = x["projects"];
     let arr = [];
-    console.log(y)
     y.map(z => {
         let a = z.proName;
-        console.log(a);
         let b = a.toUpperCase()
         if (b.includes(n)) {
             arr.push(z);
@@ -1026,7 +1023,6 @@ function newPro() {
     btn.setAttribute("style", "padding: 0 5px")
     btn.onclick = () => {
         if (proValidate()) {
-            console.log("done")
             addTask()
         }
         else {
@@ -1040,8 +1036,23 @@ function newPro() {
 
 }
 
+function newcheck(){
+    let place = document.getElementById("selectUser").value;
+    let er = document.getElementById("pnUErr");
+    console.log(place)
+    if(place == undefined){
+        er.style.color = "red"
+        er.innerHTML = "choose atlest 1 partner"
+        return false
+    }
+    else{
+        er.innerHTML = ""
+        return true
+    }
+}
+
 function proValidate() {
-    if (pna() && pnda()) {
+    if (pna() && pnda() && newcheck()) {
         if (sessionStorage.length > 0) {
             let pname = document.getElementById("proName").value;
             let pDesc = document.getElementById("proDesc").value;
@@ -1063,7 +1074,11 @@ function proValidate() {
                 }
 
             }
-
+            let om = getData();
+            let x2 = { "giveById": JSON.parse(sessionStorage.getItem("ide")), "proName": pname, "proDesc": pDesc, "tasks": [] };
+            om.Task.push(x2)
+                    let sd = JSON.stringify(om)
+                    localStorage.setItem(JSON.parse(sessionStorage.getItem("ide")), sd);
 
             return true
         }
