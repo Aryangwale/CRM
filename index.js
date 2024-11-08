@@ -1,5 +1,66 @@
 
+function createDynamicContent() {
+    const futDiv = document.getElementById('fut');
 
+    // Add CSS styles
+    const style = document.createElement('style');
+    style.innerHTML = `
+        #fut h4 {
+            margin: 10px 0 5px 0;
+        }
+        #fut p {
+            margin: 5px 0 3px 0;
+        }
+        #fut .social-links {
+            margin: 4px 0 4px 0;
+        }
+        #fut .social-links img {
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            margin: 6px 3px;
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Create content
+    const heading = document.createElement('h4');
+    heading.innerHTML = 'Customer Relationship Management';
+
+    const paragraph = document.createElement('p');
+    paragraph.innerHTML = `<Strong>Contact us :<Strong> <a target='_blank'  href="mailto:aryangwale8827@gmail.com">aryangwale8827@gmail.com</a>`;
+
+    const socialDiv = document.createElement('div');
+    socialDiv.className = 'social-links';
+
+
+    const links = [
+        { href: 'https://www.linkedin.com/in/aryangwale/', src: 'icons8-linkedin-logo-48.png' },
+        { href: 'https://github.com/Aryangwale', src: 'icons8-github-50.png' },
+        { href: 'https://www.instagram.com/aryangwale/', src: 'icons8-instagram-logo-60.png' }
+    ];
+
+    links.forEach(link => {
+        const anchor = document.createElement('a');
+        anchor.href = link.href;
+        anchor.target = '_blank';
+        anchor.style.textDecoration = 'none';
+
+        const image = document.createElement('img');
+        image.src = link.src;
+        image.alt = 'Social media icon';
+
+        anchor.appendChild(image);
+        socialDiv.appendChild(anchor);
+    });
+
+    // futDiv.appendChild(heading);
+    let newDiv = document.createElement("div");
+    newDiv.id = "myhead"
+    newDiv.appendChild(paragraph);
+    newDiv.appendChild(socialDiv);
+    futDiv.appendChild(newDiv)
+}
 function home() {
     let mainpage = document.getElementById("main");
     if (!document.getElementById("nav-main")) {
@@ -8,11 +69,11 @@ function home() {
         let navDiv = document.createElement("div");
         navDiv.id = "nav-main";
         navDiv.setAttribute("class", "container-fluid d-flex align-items-center justify-content-around fixed-top");
-        navDiv.setAttribute("style", "background-color: rgba(0, 0, 0, 0.068); height: 45px;")
+        navDiv.setAttribute("style", "background-color: white; height: 45px; box-shadow: 1px 1px 8px black")
 
         let leftDiv = document.createElement("div");
         leftDiv.id = "main-left";
-        leftDiv.innerHTML = "<strong>CRM</strong>"
+        leftDiv.innerHTML = "<strong style='cursor: pointer;'  onclick='home()'>CRM</strong>"
         navDiv.appendChild(leftDiv)
 
         let midDiv = document.createElement("div");
@@ -66,6 +127,15 @@ function home() {
         }
         navDiv.appendChild(rightDiv)
         navH.appendChild(navDiv)
+        if (sessionStorage.length > 0) {
+           funAna()
+        }
+        else {
+            homeContent()
+        }
+        if (!document.getElementById("myhead")) {
+            createDynamicContent();
+        }
     }
     else {
         document.getElementById("nav-main").remove();
@@ -77,12 +147,156 @@ function home() {
 }
 
 
+function funAna(){
+    if (document.getElementById("mypro2")) {
+        document.getElementById("mypro2").remove()
+    }
+    let mydata = getData();
+    let mainbody = document.getElementById("mainBody")
+    let maindiv = document.createElement("div");
+    mainbody.setAttribute("class","container")
+    maindiv.id = "div1"
+    let i = 1
+    mydata.projects.map(x =>{
+        let r =  document.createElement("div")
+        r.setAttribute("class","row border m-2  p-2")
+        let co1 = document.createElement("div");
+        co1.setAttribute("class","col-md-2 col-sm-2 col-2")
+        co1.innerHTML = `<strong>Sno.</strong><span> ${i}</span>`
+        let co2 = document.createElement('div');
+        co2.setAttribute("class","col-md-4 col-sm-4 col-4")
+        co2.innerHTML = `${x.proName}`
+        let co3 = document.createElement('div');
+        co3.setAttribute("class","col-md-6 col-sm-6 col-6")
+        if(x.tasks.length==0){
+            co3.innerHTML = "<strong style='color: red;'>Not started yet</strong>"
+        }
+        else{
+            showAna(x.tasks,co3)
+        }
+        i++;
+        r.appendChild(co1);
+        r.appendChild(co2);
+        r.appendChild(co3);
+        maindiv.appendChild(r)
+    })
+    
+
+    mainbody.appendChild(maindiv)
+}
+
+
+function showAna(data,div){
+    let a = 0;
+    let b = 0;
+    data.map( x =>{
+        if(x.status == true){
+            a++;
+        }
+        else{
+            b++;
+        }
+    })
+    let r = document.createElement("div")
+    r.setAttribute("class","row")
+    let co1 = document.createElement("div");
+    co1.setAttribute("class","col-sm-4")
+    co1.innerHTML = `<strong>Total task <strong> <span style="color: blue;"> ${a+b}</span>`;
+    r.appendChild(co1)
+    let co2 = document.createElement("div");
+    co2.setAttribute("class","col-sm-4")
+    co2.innerHTML = `<strong>Completed task<strong> <span style="color: green;">  ${a}</span>`;
+    r.appendChild(co1)
+    let co3 = document.createElement("div");
+    co3.setAttribute("class","col-sm-4")
+    co3.innerHTML = `<strong>Incompleted task<strong> <span style="color: red;">${(a+b)-a} </span>`;
+    r.appendChild(co1)
+    r.appendChild(co3)
+    r.appendChild(co2)
+    div.appendChild(r)
+}
+
+function homeContent() {
+    let mainbody = document.getElementById("mainBody")
+    let maindiv = document.createElement("div");
+    maindiv.id = "div1"
+    let div1 = document.createElement("div")
+    div1.setAttribute("class", "container pt-3")
+    let d1 = document.createElement("div");
+    d1.setAttribute("class", "row");
+    let dc1 = document.createElement("div");
+    dc1.setAttribute("class", "col-md-6 col-sm-6 col-4");
+    dc1.setAttribute("onclick", "signup()");
+    dc1.setAttribute("style", "height: 150px; cursor: pointer;");
+    dc1.innerHTML = "<img src='signup.png' alt='not-found' width='100%' height='100%'>"
+    let dc2 = document.createElement("div")
+    dc2.setAttribute("class", "col-md-6 col-sm-6 col-8");
+    dc2.innerHTML = "<p style='margin: 4px;'><strong>Step 1 : </strong> Register your self on this site using signup botton</p><p style='margin: 4px;'><strong>A.</strong> Enter your name</p><p style='margin: 4px;'><strong>B.</strong> Enter your username</p><p style='margin: 4px;'><strong>C.</strong> Enter your password </p><p  style='margin: 4px;'><strong>D. </strong>click on <strong style='color: green; cursor: pointer;' onclick='signup()'>submit button</strong></p>"
+    d1.appendChild(dc1);
+    d1.appendChild(dc2);
+
+
+
+    let d2 = document.createElement("div");
+    d2.setAttribute("class", "row mt-2");
+    let d2c1 = document.createElement("div");
+    d2c1.setAttribute("class", "col-md-6 col-sm-6 col-4");
+    d2c1.setAttribute("onclick", "login()");
+    d2c1.setAttribute("style", "height: 170px; cursor: pointer;")
+    d2c1.innerHTML = "<img src='login.png' alt='not-found' width='100%' height='100%'>"
+    let d2c2 = document.createElement("div")
+    d2c2.setAttribute("class", "col-md-6 col-sm-6 col-8");
+    d2c2.innerHTML = "<p style='margin: 4px;'><strong>Step 2 : </strong> Login your account using login button</p><p style='margin: 9px;'><strong>A.</strong> Enter your username</p><p style='margin: 9px;'><strong>B.</strong> Enter your password </p><p  style='margin: 9px;'><strong>C. </strong>click on <strong style='color: green; cursor: pointer;' onclick='login()'>Login button</strong></p>"
+    d2.appendChild(d2c2);
+    d2.appendChild(d2c1);
+
+
+
+    let d3 = document.createElement("div");
+    d3.setAttribute("class", "row mt-2");
+    let d3c1 = document.createElement("div");
+    d3c1.setAttribute("class", "col-md-12 col-sm-12 col-12");
+    d3c1.setAttribute("style", "height: 140px;")
+    d3c1.innerHTML = "<img src='pro.png' alt='not-found' width='100%' height='100%'>"
+    let d3c2 = document.createElement("div")
+    d3c2.setAttribute("class", "col-md-12 col-sm-12 col-12");
+    d3c2.innerHTML = "<p style='margin: 4px; margin-top: 15px;'><strong>Step 3 : </strong>Now you can create projects by clicking on <strong>MY Project </strong> button and explor more</p>"
+    d3.appendChild(d3c1);
+    d3.appendChild(d3c2);
+
+
+    let d4 = document.createElement("div");
+    d4.setAttribute("class", "row mt-2");
+    let d4c1 = document.createElement("div");
+    d4c1.setAttribute("class", "col-md-12 col-sm-12 col-12");
+    d4c1.setAttribute("style", "height: 140px;")
+    d4c1.innerHTML = "<img src='task.png' alt='not-found' width='100%' height='100%'>"
+    let d4c2 = document.createElement("div")
+    d4c2.setAttribute("class", "col-md-12 col-sm-12 col-12");
+    d4c2.innerHTML = "<p style='margin: 4px; margin-top: 15px;'><strong>Step 4 : </strong>View your asign taks on <strong>MY Task </strong> button  and explor more</p>"
+    d4.appendChild(d4c1);
+    d4.appendChild(d4c2);
+
+
+    div1.appendChild(d1)
+    div1.appendChild(document.createElement('hr'));
+    div1.appendChild(d2)
+    div1.appendChild(document.createElement('hr'));
+    div1.appendChild(d3)
+    div1.appendChild(document.createElement('hr'));
+    div1.appendChild(d4)
+    maindiv.appendChild(div1)
+    mainbody.appendChild(maindiv)
+}
 
 function detail() {
+    if (document.getElementById("myhead")) {
+        document.getElementById("myhead").remove()
+    }
     if (sessionStorage.length > 0) {
         if (!document.getElementById("div1")) {
             highlight("detail")
-            if(document.getElementById("mypro2")){
+            if (document.getElementById("mypro2")) {
                 document.getElementById("mypro2").remove()
             }
             let mainBody = document.getElementById('mainBody');
@@ -92,8 +306,8 @@ function detail() {
             div2.id = "div2"
             let p = 1
             getData().Task.map(x => {
-                
-                proDetail(x, div2 ,p);
+
+                proDetail(x, div2, p);
                 p++;
             })
             mainDiv.appendChild(div2)
@@ -112,32 +326,32 @@ function detail() {
     }
 }
 
-function highlight(h){
-    if(h == "detail"){
+function highlight(h) {
+    if (h == "detail") {
         let y = document.getElementById("midDivLeft")
-        y.setAttribute("style","color: black; cursor: pointer;") 
+        y.setAttribute("style", "color: black; cursor: pointer;")
 
         let x = document.getElementById("midDivRight")
-        x.setAttribute("style","color: green; cursor: pointer;") 
+        x.setAttribute("style", "color: green; cursor: pointer;")
     }
-    else if(h == "addTask"){
+    else if (h == "addTask") {
         let y = document.getElementById("midDivLeft")
-        y.setAttribute("style","color: green; cursor: pointer;") 
+        y.setAttribute("style", "color: green; cursor: pointer;")
 
         let x = document.getElementById("midDivRight")
-       x.setAttribute("style","color: black; cursor: pointer;") 
+        x.setAttribute("style", "color: black; cursor: pointer;")
     }
-    else{
+    else {
         let y = document.getElementById("midDivLeft")
-        y.setAttribute("style","color: black; cursor: pointer;") 
+        y.setAttribute("style", "color: black; cursor: pointer;")
 
         let x = document.getElementById("midDivRight")
-       x.setAttribute("style","color: black; cursor: pointer;") 
+        x.setAttribute("style", "color: black; cursor: pointer;")
     }
 
 }
 
-function proDetail(x, y,p) {
+function proDetail(x, y, p) {
     if (document.getElementById("mypro2")) {
         document.getElementById("mypro2").remove()
     }
@@ -150,7 +364,7 @@ function proDetail(x, y,p) {
     r.setAttribute("class", "row");
     r.setAttribute("style", "margin:0;");
     let c = document.createElement("div");
-    c.setAttribute("class","col-md-2");
+    c.setAttribute("class", "col-md-2");
     c.textContent = p;
     let c1 = document.createElement("div");
     c1.setAttribute("class", 'col-md-4')
@@ -326,6 +540,9 @@ function getData() {
 
 
 function addTask() {
+    if (document.getElementById("myhead")) {
+        document.getElementById("myhead").remove()
+    }
     if (sessionStorage.length > 0) {
         if (!document.getElementById("div1")) {
             let MB = document.getElementById("mainBody");
@@ -681,7 +898,10 @@ function newtask(x) {
         opt.textContent = x;
         st.appendChild(opt);
     })
-
+    let d = document.createElement("option")
+    d.value = mydata.Username;
+    d.textContent = mydata.Username;
+    st.appendChild(d);
     let div2 = document.createElement("div");
     div2.setAttribute("class", "form-group w-50 m-auto");
 
@@ -761,9 +981,9 @@ function newPro() {
     div1.setAttribute("class", "w-50 m-auto pt-5")
 
     let y = [
-        { 'labelName': " Enter project name", "inputType": 'text', 'for': 'proName', "eid": "pnErr", "onkeyup1": "pna()" },
-        { 'labelName': "Description of the project", "inputType": 'text', 'for': 'proDesc', "eid": "pnDErr", "onkeyup1": "pnda()" },
-        { 'labelName': "Search team", "inputType": 'text', 'for': 'team', "onkeyup1": "myTeam()", "eid": "pnUErr" }
+        { 'labelName': " Enter project name", "inputType": 'text', 'for': 'proName', "eid": "pnErr", "onkeyup1": "pna()", "ph": "" },
+        { 'labelName': "Description of the project", "inputType": 'text', 'for': 'proDesc', "eid": "pnDErr", "onkeyup1": "pnda()", "ph": "" },
+        { 'labelName': "Add team member", "inputType": 'text', 'for': 'team', "onkeyup1": "myTeam()", "eid": "pnUErr", "ph": "search here" }
     ]
 
     y.map(x => {
@@ -777,6 +997,7 @@ function newPro() {
         inputT.setAttribute("onkeyup", x.onkeyup1)
         inputT.setAttribute("class", "form-control");
         inputT.name = x.inputType;
+        inputT.placeholder = x.ph;
         div2.appendChild(labelT)
         let sm = document.createElement("small");
         sm.id = x.eid;
@@ -928,6 +1149,9 @@ function myTeam() {
 };
 
 function signup() {
+    if (document.getElementById("myhead")) {
+        document.getElementById("myhead").remove()
+    }
     if (!document.getElementById("div1")) {
         if (document.getElementById("mypro2")) {
             let tt = document.getElementById("mypro2");
@@ -1128,7 +1352,9 @@ function unameCheck() {
 }
 
 function login(oo) {
-
+    if (document.getElementById("myhead")) {
+        document.getElementById("myhead").remove()
+    }
     if (!document.getElementById("div1")) {
         if (document.getElementById("mypro2")) {
             let tt = document.getElementById("mypro2");
@@ -1189,18 +1415,18 @@ function login(oo) {
         bb.setAttribute("class", "btn btn-success m-auto");
         bb.onclick = () => {
             if (authUser(mDiv)) {
-                if(oo == "detail"){
+                if (oo == "detail") {
                     home()
                     detail();
                 }
-                else if(oo == "addTask"){
+                else if (oo == "addTask") {
                     home()
                     addTask()
                 }
-                else{
+                else {
                     home()
                 }
-                
+
 
             }
             else {
@@ -1223,7 +1449,7 @@ function login(oo) {
 
 
 function authUser(ver) {
-    if(document.getElementById("cre")){
+    if (document.getElementById("cre")) {
         document.getElementById("cre").remove();
     }
     let x = document.getElementById("username").value;
@@ -1242,7 +1468,3 @@ function authUser(ver) {
     ver.appendChild(sDiv);
     return false
 }
-
-
-// {projects: [{sno: 1, proname: "web-1"}, {sno: 2, proname: "web-2"}, {sno: 3, proname: "web-2"}]}
-
