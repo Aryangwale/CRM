@@ -1037,10 +1037,10 @@ function newPro() {
 }
 
 function newcheck(){
-    let place = document.getElementById("selectUser").value;
+    let place = document.getElementById("selectUser").innerText;
     let er = document.getElementById("pnUErr");
     console.log(place)
-    if(place == undefined){
+    if(place == ''){
         er.style.color = "red"
         er.innerHTML = "choose atlest 1 partner"
         return false
