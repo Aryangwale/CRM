@@ -156,10 +156,17 @@ function funAna(){
     let maindiv = document.createElement("div");
     mainbody.setAttribute("class","container")
     maindiv.id = "div1"
+    let ds = document.createElement("h2")
+    ds.textContent = "Project Analyze";
+
+    maindiv.appendChild(ds)
     let i = 1
+    let m =0;
     mydata.projects.map(x =>{
         let r =  document.createElement("div")
+        r.setAttribute("onclick",`taskIn(${m})`);
         r.setAttribute("class","row border m-2  p-2")
+        r.style.cursor = "pointer"
         let co1 = document.createElement("div");
         co1.setAttribute("class","col-md-2 col-sm-2 col-2")
         co1.innerHTML = `<strong>Sno.</strong><span> ${i}</span>`
@@ -179,6 +186,7 @@ function funAna(){
         r.appendChild(co2);
         r.appendChild(co3);
         maindiv.appendChild(r)
+        m++;
     })
     
 
@@ -1155,11 +1163,15 @@ function myTeam() {
     for (let i = 1; i <= localStorage.length; i++) {
         let a = JSON.parse(localStorage.getItem(i))
         let f = a["Username"]
-        if (f == x) {
+        if (f.includes(x)) {
             se.setAttribute("style", "display: block;")
-            se.textContent = x;
-            se.value = x
+            se.textContent = a["Username"];
+            se.value = a["Username"];
         }
+    }
+    if(x==''){
+        se.textContent = '';
+        se.value = '';
     }
 };
 
