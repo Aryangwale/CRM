@@ -28,7 +28,8 @@ function createDynamicContent() {
     heading.innerHTML = 'Customer Relationship Management';
 
     const paragraph = document.createElement('p');
-    paragraph.innerHTML = `<Strong>Contact us :<Strong> <a target='_blank'  href="mailto:aryangwale8827@gmail.com">aryangwale8827@gmail.com</a>`;
+    paragraph.innerHTML = `<strong>Contact us:</strong> <a target='_blank' href="mailto:aryangwale8827@gmail.com?subject=Subject%20Here&body=Message%20Here">aryangwale8827@gmail.com</a>`;
+
 
     const socialDiv = document.createElement('div');
     socialDiv.className = 'social-links';
@@ -73,7 +74,7 @@ function home() {
 
         let leftDiv = document.createElement("div");
         leftDiv.id = "main-left";
-        leftDiv.innerHTML = "<strong style='cursor: pointer;'  onclick='home()'>InterAct</strong>"
+        leftDiv.innerHTML = "<h3 style='cursor: pointer;'  onclick='home()'><strong>InterAct</strong></h3>"
         navDiv.appendChild(leftDiv)
 
         let midDiv = document.createElement("div");
@@ -84,7 +85,7 @@ function home() {
 
         midDivLeft = document.createElement("div");
         midDivLeft.id = "midDivLeft";
-        midDivLeft.innerHTML = "MY Project"
+        midDivLeft.innerHTML = "<h5><strong>MY Project</strong></h5>"
         midDivLeft.setAttribute("style", "cursor: pointer;");
         midDivLeft.setAttribute("class", "p-3");
         midDivLeft.setAttribute("onclick", "addTask()")
@@ -92,7 +93,7 @@ function home() {
 
         midDivRight = document.createElement("div");
         midDivRight.id = "midDivRight";
-        midDivRight.innerHTML = "MY Tasks"
+        midDivRight.innerHTML = "<h5><strong>MY Tasks</strong></h5>"
         midDivRight.setAttribute("style", "cursor: pointer;");
         midDivRight.setAttribute("class", "p-3");
         midDivRight.setAttribute("onclick", "detail()")
@@ -668,13 +669,13 @@ function taskIn(x) {
     t1.setAttribute("class", "container")
     t1.setAttribute("style", "padding:4px 0;")
     let t11 = document.createElement("div");
-    t11.setAttribute("class", "row")
+    t11.setAttribute("class", "row mt-1 mb-1")
     let t111 = document.createElement("div");
     t111.setAttribute("class", "col-md-6")
-    t111.innerHTML = "<strong>All tasks</strong>"
+    t111.innerHTML = "<strong>All Tasks</strong>"
     let t112 = document.createElement("div");
     t112.setAttribute("class", "col-md-6")
-    t112.innerHTML = `<button onclick= 'newtask(${x})'' type='button' class='btn btn-outline-dark btn-sm' style = 'border: none;'><strong>add <span style='color: green;  text-decoration: underline;'>task</span></strong></button>`
+    t112.innerHTML = `<button onclick= 'newtask(${x})'' type='button' class='btn btn-dark btn-sm border' style = 'border: none;'><strong style='color: rgb(8,255,8);'>Add <span style='color: lavender;  text-decoration: underline;'>Task</span></strong></button>`
     t11.appendChild(t111)
     t11.appendChild(t112)
     t1.appendChild(t11)
