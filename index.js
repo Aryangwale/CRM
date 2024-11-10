@@ -129,7 +129,7 @@ function home() {
         navDiv.appendChild(rightDiv)
         navH.appendChild(navDiv)
         if (sessionStorage.length > 0) {
-           funAna()
+            funAna()
         }
         else {
             homeContent()
@@ -148,39 +148,39 @@ function home() {
 }
 
 
-function funAna(){
+function funAna() {
     if (document.getElementById("mypro2")) {
         document.getElementById("mypro2").remove()
     }
     let mydata = getData();
     let mainbody = document.getElementById("mainBody")
     let maindiv = document.createElement("div");
-    mainbody.setAttribute("class","container")
+    mainbody.setAttribute("class", "container")
     maindiv.id = "div1"
     let ds = document.createElement("h2")
     ds.textContent = "Project Analyze";
 
     maindiv.appendChild(ds)
     let i = 1
-    let m =0;
-    mydata.projects.map(x =>{
-        let r =  document.createElement("div")
-        r.setAttribute("onclick",`taskIn(${m})`);
-        r.setAttribute("class","row border m-2  p-2")
+    let m = 0;
+    mydata.projects.map(x => {
+        let r = document.createElement("div")
+        r.setAttribute("onclick", `taskIn(${m})`);
+        r.setAttribute("class", "row border m-2  p-2")
         r.style.cursor = "pointer"
         let co1 = document.createElement("div");
-        co1.setAttribute("class","col-md-2 col-sm-2 col-2")
+        co1.setAttribute("class", "col-md-2 col-sm-2 col-2")
         co1.innerHTML = `<strong>Sno.</strong><span> ${i}</span>`
         let co2 = document.createElement('div');
-        co2.setAttribute("class","col-md-4 col-sm-4 col-4")
+        co2.setAttribute("class", "col-md-4 col-sm-4 col-4")
         co2.innerHTML = `${x.proName}`
         let co3 = document.createElement('div');
-        co3.setAttribute("class","col-md-6 col-sm-6 col-6")
-        if(x.tasks.length==0){
+        co3.setAttribute("class", "col-md-6 col-sm-6 col-6")
+        if (x.tasks.length == 0) {
             co3.innerHTML = "<strong style='color: red;'>Not started yet</strong>"
         }
-        else{
-            showAna(x.tasks,co3)
+        else {
+            showAna(x.tasks, co3)
         }
         i++;
         r.appendChild(co1);
@@ -189,36 +189,36 @@ function funAna(){
         maindiv.appendChild(r)
         m++;
     })
-    
+
 
     mainbody.appendChild(maindiv)
 }
 
 
-function showAna(data,div){
+function showAna(data, div) {
     let a = 0;
     let b = 0;
-    data.map( x =>{
-        if(x.status == true){
+    data.map(x => {
+        if (x.status == true) {
             a++;
         }
-        else{
+        else {
             b++;
         }
     })
     let r = document.createElement("div")
-    r.setAttribute("class","row")
+    r.setAttribute("class", "row")
     let co1 = document.createElement("div");
-    co1.setAttribute("class","col-sm-4")
-    co1.innerHTML = `<strong>Total task <strong> <span style="color: blue;"> ${a+b}</span>`;
+    co1.setAttribute("class", "col-sm-4")
+    co1.innerHTML = `<strong>Total task <strong> <span style="color: blue;"> ${a + b}</span>`;
     r.appendChild(co1)
     let co2 = document.createElement("div");
-    co2.setAttribute("class","col-sm-4")
+    co2.setAttribute("class", "col-sm-4")
     co2.innerHTML = `<strong>Completed task<strong> <span style="color: green;">  ${a}</span>`;
     r.appendChild(co1)
     let co3 = document.createElement("div");
-    co3.setAttribute("class","col-sm-4")
-    co3.innerHTML = `<strong>Incompleted task<strong> <span style="color: red;">${(a+b)-a} </span>`;
+    co3.setAttribute("class", "col-sm-4")
+    co3.innerHTML = `<strong>Incompleted task<strong> <span style="color: red;">${(a + b) - a} </span>`;
     r.appendChild(co1)
     r.appendChild(co3)
     r.appendChild(co2)
@@ -424,6 +424,10 @@ function taskDetail(x) {
     th4.setAttribute("scope", "col")
     th4.textContent = "Last date";
 
+    let th7 = document.createElement("th");
+    th7.setAttribute("scope", "col")
+    th7.textContent = "Duration";
+
     let th6 = document.createElement("th");
     th6.setAttribute("scope", "col")
     th6.textContent = "Assign date";
@@ -434,6 +438,7 @@ function taskDetail(x) {
     tr.appendChild(th3);
     tr.appendChild(th6);
     tr.appendChild(th4);
+    tr.appendChild(th7);
     tr.appendChild(th5);
     tab.appendChild(tr)
     t2.appendChild(tab);
@@ -455,12 +460,16 @@ function taskInTaskDetail(x, y) {
         th2.textContent = z.user;
 
         let th5 = document.createElement("td");
-        if (z.status) {
-            th5.innerHTML = "<strong style='color: green;'>completed &check;</strong>";
+        if (z.newAsign) {
+            th5.innerHTML = "<strong style='color: RED;'>This task has been asigned to other</strong>";
         }
         else {
-
-            th5.innerHTML = `<strong id='mainSpan'><span style='padding: 2px; color:#b0b006bd;'>pending</span>/<span style='color: green;  cursor: pointer;  padding: 2px;' onclick='update(${JSON.stringify(x)},${JSON.stringify(z)})'   >update</span></strong>`;
+            if (z.status) {
+                th5.innerHTML = "<strong style='color: green;'>completed &check;</strong>";
+            }
+            else {
+                th5.innerHTML = `<strong id='mainSpan'><span style='padding: 2px; color:#b0b006bd;'>pending</span>/<span style='color: green;  cursor: pointer;  padding: 2px;' onclick='update(${JSON.stringify(x)},${JSON.stringify(z)})'   >update</span></strong>`;
+            }
         }
 
         let th3 = document.createElement("td");
@@ -469,6 +478,15 @@ function taskInTaskDetail(x, y) {
         let th4 = document.createElement("td");
         th4.textContent = z.lDate;
 
+
+        let th7 = document.createElement("td");
+        if (z.duration) {
+            th7.innerHTML = `${z.aDate} / ${z.duration}`
+        }
+        else {
+            th7.innerHTML = `${z.aDate} / <strong style='color: green;'>Continue</strong>`
+        }
+
         let th6 = document.createElement("td");
         th6.textContent = z.aDate;
 
@@ -476,6 +494,7 @@ function taskInTaskDetail(x, y) {
         tr.appendChild(th3);
         tr.appendChild(th6);
         tr.appendChild(th4);
+        tr.appendChild(th7);
         tr.appendChild(th5);
         y.appendChild(tr)
         i++;
@@ -496,12 +515,17 @@ function update(x, y) {
 function done(x, y) {
 
     let b = JSON.parse(localStorage.getItem(x.giveById))
-
+    const today = new Date();
+    const date = today.getDate().toString().padStart(2, '0');
+    const month = (today.getMonth() + 1).toString().padStart(2, '0');
+    const year = today.getFullYear().toString();
+    const formattedDate = `${date}-${month}-${year}`
     for (let i = 0; i < b.projects.length; i++) {
         if (b.projects[i].proName == x.proName) {
             for (let j = 0; j < b.projects[i].tasks.length; j++) {
                 if (y.task == b.projects[i].tasks[j].task) {
                     b.projects[i].tasks[j].status = true;
+                    b.projects[i].tasks[j].duration = formattedDate;
                     b.projects[i].tasks.splice(j, 1, b.projects[i].tasks[j])
                     localStorage.setItem(x.giveById, JSON.stringify(b));
                 }
@@ -518,6 +542,7 @@ function done(x, y) {
             for (let j = 0; j < a.Task[i].tasks.length; j++) {
                 if (y.task == a.Task[i].tasks[j].task) {
                     a.Task[i].tasks[j].status = true;
+                    a.Task[i].tasks[j].duration = formattedDate;
                     a.Task[i].tasks.splice(j, 1, a.Task[i].tasks[j])
                     proUp(a)
                     taskDetail(a.Task[i])
@@ -620,7 +645,6 @@ function addTask() {
 
 
 function showTask(con, xy) {
-    // console.log(xy);
     let i = 1
     xy.projects.map(x => {
         let sd = xy.projects.indexOf(x)
@@ -707,6 +731,11 @@ function taskIn(x) {
     th4.setAttribute("scope", "col")
     th4.textContent = "Last date";
 
+
+    let th7 = document.createElement("th");
+    th7.setAttribute("scope", "col")
+    th7.textContent = "Duration";
+
     let th6 = document.createElement("th");
     th6.setAttribute("scope", "col")
     th6.textContent = "Assign date";
@@ -716,6 +745,7 @@ function taskIn(x) {
     tr.appendChild(th3);
     tr.appendChild(th6);
     tr.appendChild(th4);
+    tr.appendChild(th7);
     tr.appendChild(th5);
     tab.appendChild(tr)
     t2.appendChild(tab);
@@ -724,13 +754,12 @@ function taskIn(x) {
     tMain.appendChild(t2)
     main.appendChild(tMain);
 
-
-
 }
 
 function taskInTask(x, y) {
     let mydata = getData();
     let i = 1
+    let mymem = JSON.stringify(mydata.projects[x])
     mydata.projects[x].tasks.map(z => {
         let tr = document.createElement("tr");
 
@@ -745,14 +774,25 @@ function taskInTask(x, y) {
             th5.innerHTML = "<strong style='color: green;'>completed &check;</strong>";
         }
         else {
-
-            th5.innerHTML = `<strong id='mainSpan'><span style='padding: 2px; color:#b0b006bd;'>pending</span></strong>`;
+            th5.innerHTML = `<strong id='mainSpan'><span style='padding: 2px; color:#b0b006bd;'>pending</span>`;
         }
         let th3 = document.createElement("td");
         th3.textContent = z.task;
 
         let th4 = document.createElement("td");
         th4.textContent = z.lDate;
+
+        let th8 = document.createElement("td");
+        th8.innerHTML = `<strong style='cursor:pointer; padding: 3px 5px; border: 1px solid; border-radius: 24px' onclick='edit(${JSON.stringify(z)},${mymem})'>edit?</strong>`;
+
+
+        let th7 = document.createElement("td");
+        if (z.duration) {
+            th7.innerHTML = `${z.aDate} / ${z.duration}`
+        }
+        else {
+            th7.innerHTML = `${z.aDate} / <strong style='color: green;'>Continue</strong>`
+        }
 
         let th6 = document.createElement("td");
         th6.textContent = z.aDate;
@@ -762,12 +802,245 @@ function taskInTask(x, y) {
         tr.appendChild(th3);
         tr.appendChild(th6);
         tr.appendChild(th4);
+        tr.appendChild(th7);
         tr.appendChild(th5);
+        if (!z.status) {
+            tr.appendChild(th8);
+        }
         y.appendChild(tr)
         i++;
     })
 }
 
+function edit(x, y) {
+    document.getElementById("div1").remove()
+    let mainbody = document.getElementById("mainBody")
+    let maindiv = document.createElement("div")
+    maindiv.id = "div1";
+    let h1 = document.createElement("h1")
+    h1.textContent = "Task updation"
+    maindiv.appendChild(h1)
+
+
+    let divTag = document.createElement("div")
+    divTag.setAttribute("class", "form-group w-50 m-auto")
+    let inpTag = document.createElement("input");
+    inpTag.id = "taskup"
+    inpTag.type = "text"
+    inpTag.setAttribute("class", "form-control")
+    let lab = document.createElement("label")
+    lab.textContent = "Task"
+    inpTag.value = x.task
+    inpTag.setAttribute("onkeyup", "check1()")
+    let e1 = document.createElement("small")
+    e1.id = "e1"
+    divTag.appendChild(lab)
+    divTag.appendChild(inpTag)
+    divTag.appendChild(e1)
+
+
+
+    let divTag2 = document.createElement("div")
+    divTag2.setAttribute("class", "form-group w-50 m-auto")
+    let inpTag2 = document.createElement("input");
+    inpTag2.id = "date1"
+    inpTag2.type = "date"
+    inpTag2.setAttribute("class", "form-control")
+    let lab2 = document.createElement("label")
+    lab2.textContent = "Last Date"
+    inpTag2.value = x.lDate
+    // inpTag2.setAttribute("onkeyup","()")
+    let e2 = document.createElement("small")
+    e2.id = "e2"
+    divTag2.appendChild(lab2)
+    divTag2.appendChild(inpTag2)
+    divTag.appendChild(e2)
+
+
+    let divTag3 = document.createElement("div")
+    divTag3.setAttribute("class", "form-group w-50 m-auto")
+    let inpTag3 = document.createElement("select");
+    inpTag3.id = "sel1"
+    inpTag3.setAttribute("class", "form-control")
+    let lab3 = document.createElement("label")
+    lab3.textContent = "User"
+
+    let optT = document.createElement("option")
+    optT.value = x.user
+    optT.textContent = x.user
+    inpTag3.appendChild(optT)
+
+    y.myTeam.map(b => {
+        if (!(b == x.user)) {
+            let optT = document.createElement("option")
+            optT.value = b
+            optT.textContent = b
+            inpTag3.appendChild(optT)
+        }
+    })
+
+
+    // inpTag3.setAttribute("onkeyup","test()")
+    divTag3.appendChild(lab3)
+    divTag3.appendChild(inpTag3)
+
+
+    let divTag4 = document.createElement("div")
+    divTag4.setAttribute("class", "form-group w-50 m-auto pt-4")
+    let btn = document.createElement("button")
+    btn.setAttribute("class", 'btn btn-success')
+    btn.textContent = "update"
+    btn.onclick = () => {
+        if (upVali(x, y, x.user)) {
+            home()
+        }
+    }
+
+    divTag4.appendChild(btn)
+    maindiv.appendChild(divTag)
+    maindiv.appendChild(divTag2)
+    maindiv.appendChild(divTag3)
+    maindiv.appendChild(divTag4)
+    mainbody.appendChild(maindiv)
+}
+
+function upVali(x, y, cr) {
+    if (check1()) {
+        let newuser = document.getElementById("sel1").value;
+        if (newuser == cr) {
+            for (let i = 1; i <= localStorage.length; i++) {
+                let m = JSON.parse(localStorage.getItem(i))
+                if (m.Username == cr) {
+                    m.Task.map(o => {
+                        if (o.proName == y.proName) {
+                            o.tasks.map(oo => {
+                                if (oo.task == x.task) {
+                                    let tk = document.getElementById("taskup").value
+                                    let dt = document.getElementById("date1").value
+                                    oo.task = tk;
+                                    oo.lDate = dt;
+                                    let ok = JSON.stringify(m)
+                                    localStorage.setItem(i, ok)
+
+                                }
+                            })
+                        }
+                    })
+                }
+            }
+
+            let m = getData()
+            m.projects.map(o => {
+                if (o.proName == y.proName) {
+                    o.tasks.map(oo => {
+                        if (oo.task == x.task) {
+                            let tk = document.getElementById("taskup").value
+                            let dt = document.getElementById("date1").value
+                            oo.task = tk;
+                            oo.lDate = dt;
+                            proUp(m)
+                        }
+                    })
+                }
+            })
+            return true
+
+
+        }
+        else {
+            const today = new Date();
+            const date = today.getDate().toString().padStart(2, '0');
+            const month = (today.getMonth() + 1).toString().padStart(2, '0');
+            const year = today.getFullYear().toString();
+            const formattedDate = `${date}-${month}-${year}`
+            for (let i = 1; i <= localStorage.length; i++) {
+                let m = JSON.parse(localStorage.getItem(i))
+                if (m.Username == cr) {
+                    m.Task.map(o => {
+                        if (o.proName == y.proName) {
+                            o.tasks.map(oo => {
+                                if (oo.task == x.task) {
+                                    oo.newAsign = true;
+                                    oo.duration = formattedDate
+                                    let ok = JSON.stringify(m)
+                                    localStorage.setItem(i, ok)
+
+                                }
+                            })
+                        }
+                    })
+                }
+            }
+
+
+
+
+            for (let i = 1; i <= localStorage.length; i++) {
+                let m = JSON.parse(localStorage.getItem(i))
+                let j = document.getElementById("sel1").value
+                let tk = document.getElementById("taskup").value
+                let dt = document.getElementById("date1").value
+                if (m.Username == j) {
+                    m.Task.map(o => {
+                        if (o.proName == y.proName) {
+                            let c = {
+                                "task": tk,
+                                "aDate": x.aDate,
+                                "lDate": dt,
+                                "status": false,
+                                "duration": false,
+                                "newAsign": false
+                            }
+                            o.tasks.push(c)
+                            localStorage.setItem(i, JSON.stringify(m))
+                        }
+                    })
+                }
+            }
+
+
+
+            let m = getData()
+            m.projects.map(o => {
+                if (o.proName == y.proName) {
+                    o.tasks.map(oo => {
+                        if (oo.task == x.task) {
+                            let tk = document.getElementById("taskup").value
+                            let dt = document.getElementById("date1").value
+                            let j = document.getElementById("sel1").value
+                            oo.task = tk;
+                            oo.lDate = dt;
+                            oo.user = j
+                            proUp(m)
+                        }
+                    })
+                }
+            })
+            return true
+        }
+
+    }
+
+
+
+    return false
+}
+
+
+function check1() {
+    let a = document.getElementById("taskup").value;
+    let e1 = document.getElementById("e1");
+    if (a == "") {
+        e1.style.color = 'red'
+        e1.textContent = "*field required"
+        return false;
+    }
+    else {
+        e1.style.color = 'red'
+        e1.textContent = ""
+        return true;
+    }
+}
 
 
 function taskValidate(n) {
@@ -786,7 +1059,8 @@ function taskValidate(n) {
             "aDate": formattedDate,
             "lDate": y,
             "user": z,
-            "status": false
+            "status": false,
+            "duration": false
         }
         a.projects[n].tasks.push(c);
         proUp(a);
@@ -796,12 +1070,13 @@ function taskValidate(n) {
                 "task": x,
                 "aDate": formattedDate,
                 "lDate": y,
-                "status": false
+                "status": false,
+                "duration": false,
+                "newAsign": false
             }
             if (j.Username == z) {
                 j.Task.map(x => {
                     if (a.projects[n].proName == x.proName) {
-                        console.log(z);
                         x.tasks.push(c2);
                     }
                 })
@@ -809,7 +1084,7 @@ function taskValidate(n) {
                 localStorage.setItem(i, hn)
             }
         }
-        
+
         return true;
     }
     else {
@@ -1045,16 +1320,16 @@ function newPro() {
 
 }
 
-function newcheck(){
+function newcheck() {
     let place = document.getElementById("selectUser").innerText;
     let er = document.getElementById("pnUErr");
-    console.log(place)
-    if(place == ''){
+
+    if (place == '') {
         er.style.color = "red"
         er.innerHTML = "choose atlest 1 partner"
         return false
     }
-    else{
+    else {
         er.innerHTML = ""
         return true
     }
@@ -1075,7 +1350,7 @@ function proValidate() {
             for (let i = 1; i <= localStorage.length; i++) {
                 let hj = JSON.parse(localStorage.getItem(i))
                 if (nTem.includes(hj.Username)) {
-                    // console.log("yes");
+                   
                     let x2 = { "giveById": JSON.parse(sessionStorage.getItem("ide")), "proName": pname, "proDesc": pDesc, "tasks": [] };
                     hj.Task.push(x2)
                     let sd = JSON.stringify(hj)
@@ -1086,8 +1361,8 @@ function proValidate() {
             let om = getData();
             let x2 = { "giveById": JSON.parse(sessionStorage.getItem("ide")), "proName": pname, "proDesc": pDesc, "tasks": [] };
             om.Task.push(x2)
-                    let sd = JSON.stringify(om)
-                    localStorage.setItem(JSON.parse(sessionStorage.getItem("ide")), sd);
+            let sd = JSON.stringify(om)
+            localStorage.setItem(JSON.parse(sessionStorage.getItem("ide")), sd);
 
             return true
         }
@@ -1170,7 +1445,7 @@ function myTeam() {
             se.value = a["Username"];
         }
     }
-    if(x==''){
+    if (x == '') {
         se.textContent = '';
         se.value = '';
     }
@@ -1265,13 +1540,7 @@ function signup() {
 }
 
 function validate(ol) {
-    // {
-    //     "Name" : name,
-    //     "Username" : uname,
-    //     "Password" : pass,
-    //     "Task" : [],
-    //     "projects" : [],
-    // }
+
     let pass = document.getElementById("pass").value;
     let uname = document.getElementById("uName").value;
     let username = document.getElementById("username").value;
@@ -1373,7 +1642,15 @@ function unameCheck() {
         }
         return false
     }
+    
     else {
+        for (let i = 1; i <= localStorage.length; i++) {
+            let x = JSON.parse(localStorage.getItem(i))
+            if(x.Username == username){
+                es.textContent = "username already exis!!"
+                return false
+            }
+        }
         es.textContent = ""
         return true
     }
