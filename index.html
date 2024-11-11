@@ -10,8 +10,33 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="icon" href="logo2.png">
     <style>
+        @media (max-width: 450px) {
+           h1{
+            font-size: 24px;
+           }
+           .h2{
+            font-size: 22px;
+           }
+           p{
+            font-size: 13px;
+            }
+            label{
+                font-size: 13px;
+            }
+            strong{
+                font-size: 16px;
+            }
+            .toop{
+                height: 70px;
+            }
+        }
         *{
-            font-family: 'PT Sans', sans-serif;}
+            font-family: 'PT Sans', sans-serif;
+        }
+        @media (min-width: 450px){
+        .toop{
+            height: 45px;
+        }}
     </style>
 </head>
 
@@ -20,7 +45,7 @@
         <div id="navHead" >
         
         </div>
-        <div id="mainBody" style="padding-top: 70px; padding-bottom: 120px;">
+        <div id="mainBody" style="padding-top: 80px; padding-bottom: 120px;">
                 
         </div>
     </div>
@@ -29,6 +54,7 @@
     </div>
     <script src="index.js"></script>
     <script>
+        setSet()
         home();
     </script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
